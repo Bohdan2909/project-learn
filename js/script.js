@@ -427,4 +427,138 @@ function transferWaitors(data) {
 }
 
 transferWaitors(restorantData);
+//Recursia
+function pow1(x,n) {
+  let resulted = 1;
+  for(let i = 0; i < n; i++){
+    resulted *= x;
+  }
+  return resulted;
+}
+console.log(pow1(2,4));
 
+function pow2(x,n){
+  if(n === 1){
+    return x;
+  } else {
+    return x * pow2(x, n - 1);
+  }
+}
+console.log(pow2(2,4));
+
+let studentis = {
+  js:[{
+    name: 'John',
+    progress: 100
+  },{
+    name: 'Ivan',
+    progress: 60
+  }
+],
+  html:{
+    basic:[{
+      name: 'Petr',
+      progress: 20
+    },{
+      name: 'Ann',
+      progress: 18
+    }],
+    pro:[{
+      name: 'Sam',
+      progress: 10
+    }]
+  }
+};
+
+function getTotalProgressByIteration (data){
+  let total = 0;
+  let studentis = 0;
+  for (let course of Object.values(data)){
+    if(Array.isArray(course)){
+      studentis += course.length;
+
+      for (let i = 0; i < course.length; i++){
+        total += course[i].progress;
+      }
+
+
+    } else {
+      for (let subCourse of Object.values(course)){
+      studentis += subCourse.length;
+          for (let i = 0; i < subCourse.length; i++){
+            total += subCourse[i].progress;
+          }  
+      }
+    }
+  }
+  return total / studentis;
+}
+console.log(getTotalProgressByIteration(studentis));
+
+
+
+function getTotalProgressByRecurtion (data) {
+
+  if(Array.isArray(data)){
+    let total = 0;
+
+    for (let i = 0; i < data.length; i++){
+      total += data[i].progress;
+    }
+      return [total, data.length];
+
+  }else {
+    let total = [0, 0];
+
+    for (let subData of Object.values(data)){
+      const subDataArr = getTotalProgressByRecurtion(subData);
+      total[0] += subDataArr[0];
+      total[1] += subDataArr[1];
+    }
+    return total;
+  }
+}
+const resul = getTotalProgressByRecurtion(studentis);
+
+console.log(resul[0] / resul[1]);
+
+//Factorial 
+function factorial(num){
+  if (num === 1) {
+    return num;
+  }else{
+    return num * factorial(num - 1);
+  }
+}
+console.log(factorial(4));
+
+function factorial1(n) {
+  if(typeof(n) !== 'number' || !Number.isInteger(n)){
+    return n;
+  }
+  let start = 1;
+for (let i = n; i >= 1; i--){
+  
+  start *= i ;
+}
+return start;
+}
+console.log(factorial1(4));
+
+function factorial(n) {
+  if (typeof(n) !== 'number' || !Number.isInteger(n)) {
+      return "Ошибка, проверьте данные";
+  }
+
+  if (n >= 1) {
+      return n * factorial(n - 1);
+  } else {
+      return 1;
+  }
+
+  // Более короткий вариант, который вы можете встретить
+  // Но не учитывает отрицательные значения
+  return n ? n * factorial(n - 1) : 1;
+}
+
+factorial(5);
